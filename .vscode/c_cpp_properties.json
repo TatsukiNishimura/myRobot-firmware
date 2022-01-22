@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "name": "Linux",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/mbed-os/**",
+        "${workspaceFolder}/user_libraries/**"
+      ],
+      "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
+      "compilerPath": "/usr/share/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi-g++",
+      "cStandard": "c89",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-arm",
+      "browse": {
+        "path": [
+          "${workspaceFolder}/**",
+          "${workspaceFolder}/mbed-os/**",
+          "${workspaceFolder}/user_libraries/**"
+        ]
+      },
+      "configurationProvider": "ms-vscode.cmake-tools"
+    }
+  ],
+  "version": 4
+}
