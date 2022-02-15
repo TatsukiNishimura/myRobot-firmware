@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         target: [NUCLEO_F767ZI]
-        profile: [release, debug, develop]
+        profile: [develop]
 
     steps:
       - name: Checkout
@@ -23,3 +23,28 @@ jobs:
       - name: build-example-application
         run: |
           mbed-tools compile -t GCC_ARM -m ${{ matrix.target }} --profile ${{ matrix.profile }}
+
+  style-check:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/armmbed/mbed-os-env:master-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: UTF-8 Check
+        run: |
+          # Make sure we're not introducing any text which is not UTF-8 encoded
+          git diff origin/${GITHUB_BASE_REF} -U0 | ( grep -a '^+' || true ) | ( ! grep -axv '.*' )
+
+      - name: astyle checks
+        run: |
+          set -x
+          git diff --name-only --diff-filter=d origin/${GITHUB_BASE_REF} \
+            | ( grep '.*\.\(c\|cpp\|h\|hpp\)$' || true ) \
+            | ( grep -v -f .codecheckignore || true ) \
+            | while read file; do astyle -n --options=.astylerc "${file}"; done
+          git diff --exit-code --diff-filter=d --color
