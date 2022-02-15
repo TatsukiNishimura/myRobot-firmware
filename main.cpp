@@ -7,8 +7,7 @@
 
 int main(void)
 {
-
-    while (1)
+    printf("hello") while (1)
     {
     }
     return 0;
