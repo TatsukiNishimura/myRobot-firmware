@@ -59,6 +59,9 @@
     "streambuf": "cpp",
     "thread": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "mbed_application.h": "c",
+    "stm32f7xx.h": "c",
+    "mstd_iterator": "cpp"
   }
 }
