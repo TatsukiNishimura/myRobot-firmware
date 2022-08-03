@@ -7,7 +7,12 @@
       "intelliSenseMode": "gcc-x64",
       "compilerPath": "/usr/share/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi-g++",
       "includePath": [
-        "${workspaceFolder}/user_libraries/**",
+        "${workspaceFolder}/user_libraries",
+        "${workspaceFolder}/user_libraries/UDPLib",
+        "${workspaceFolder}/user_libraries/serial",
+        "${workspaceFolder}/user_libraries/TB6612FNG",
+        "${workspaceFolder}/user_libraries/BTS7960",
+        "${workspaceFolder}/user_libraries/QEI",
         "${workspaceFolder}",
         "${workspaceFolder}/mbed-os",
         "${workspaceFolder}/mbed-os/cmsis",
@@ -343,10 +348,7 @@
         "${workspaceFolder}/mbed-os/targets/TARGET_STM/TARGET_STM32F7/STM32Cube_FW/STM32F7xx_HAL_Driver",
         "${workspaceFolder}/mbed-os/targets/TARGET_STM/TARGET_STM32F7/STM32Cube_FW/STM32F7xx_HAL_Driver/Legacy",
         "${workspaceFolder}/mbed-os/targets/TARGET_STM/TARGET_STM32F7/TARGET_STM32F767xI",
-        "${workspaceFolder}/mbed-os/targets/TARGET_STM/TARGET_STM32F7/TARGET_STM32F767xI/TARGET_NUCLEO_F767ZI",
-        "${workspaceFolder}/user_libraries",
-        "${workspaceFolder}/user_libraries/UDPLib",
-        "${workspaceFolder}/user_libraries/serial"
+        "${workspaceFolder}/mbed-os/targets/TARGET_STM/TARGET_STM32F7/TARGET_STM32F767xI/TARGET_NUCLEO_F767ZI"
       ],
       "defines": [
         "STM32F767xx",
