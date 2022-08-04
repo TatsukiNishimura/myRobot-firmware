@@ -17,4 +17,5 @@ target_sources(user_libraries
     TB6612FNG/TB6612FNG.cpp
     BTS7960/BTS7960.cpp
     rosserial/connectToROS.cpp
+    rosserial/EasyConnectToROS.cpp
 )

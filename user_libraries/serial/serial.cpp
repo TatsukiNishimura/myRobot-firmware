@@ -5,6 +5,10 @@ namespace userLib
     serial::serial() : obj(USBTX, USBRX, baudRate)
     {
     }
+
+    serial::serial(PinName TX, PinName RX, int baud) : obj(TX, RX, baud)
+    {
+    }
     serial::~serial()
     {
     }

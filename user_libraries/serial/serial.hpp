@@ -13,6 +13,7 @@ namespace userLib
 
     public:
         serial();
+        serial(PinName TX, PinName RX, int baud);
         ~serial();
         uint32_t printf(const char *str, ...);
         uint32_t printf(std::string data);

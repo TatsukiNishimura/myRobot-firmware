@@ -83,7 +83,7 @@ void connectToROS::readThread(void const *p)
     instance->readMutex.lock();
 
     uint8_t tempBuffer[32] = {0};
-    if (const ssize_t len = instance->serial.read(tempBuffer, sizeof(tempBuffer)))
+    if (const ssize_t len = instance->serial.read(tempBuffer, 1))
     {
         // 受信したデータを移す
         for (uint8_t i = 0; i < len; i++)
@@ -116,6 +116,7 @@ void connectToROS::parseThread()
         short ret = getChar();
         if (ret >= 0)
         {
+            printf("%d ", ret);
             const uint8_t c = static_cast<uint8_t>(ret);
             switch (state)
             {
@@ -144,26 +145,30 @@ void connectToROS::parseThread()
                 state = readDataState::DATA;
                 break;
             case readDataState::DATA:
-                if (bytes_data.size() <= length)
+                if (count < length)
                 {
                     bytes_data.emplace_back(c);
-                    if (bytes_data.size() == length)
+                    if (count == length - 1)
                     {
                         state = readDataState::CHECKSUM;
                     }
+                    count++;
                 }
                 break;
             case readDataState::CHECKSUM:
                 int checksum = 0;
-                for (auto &i : bytes_data)
+                for (const uint8_t &i : bytes_data)
                 {
                     checksum += i;
                 }
-                if (c == (checksum & 0xFF))
+                if (c == (checksum & 0xFF) + 1)
                 {
-                    // 任意の処理を書く
+                    // parse succeed
+                    led = !led;
                 }
+
                 bytes_data.clear();
+                count = 0;
                 state = readDataState::HEADER1;
                 break;
             }
