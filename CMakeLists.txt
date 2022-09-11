@@ -7,7 +7,6 @@ set(MBED_PATH ${CMAKE_CURRENT_SOURCE_DIR}/mbed-os CACHE INTERNAL "")
 set(MBED_CONFIG_PATH ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "")
 set(APP_TARGET STM32_F767ZI_ws)
 set(USER_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/user_libraries CACHE INTERNAL "")
-
 include(${MBED_PATH}/tools/cmake/app.cmake)
 
 project(${APP_TARGET})
@@ -24,6 +23,7 @@ target_link_libraries(${APP_TARGET} mbed-os mbed-netsocket mbed-events user_libr
 mbed_set_post_build(${APP_TARGET})
 
 option(VERBOSE_BUILD "Have a verbose build process")
+
 if(VERBOSE_BUILD)
     set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()

@@ -18,4 +18,5 @@ target_sources(user_libraries
     BTS7960/BTS7960.cpp
     rosserial/connectToROS.cpp
     rosserial/EasyConnectToROS.cpp
+    BMX055/BMX055.cpp
 )

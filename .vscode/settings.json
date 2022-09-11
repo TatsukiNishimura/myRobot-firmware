@@ -62,6 +62,7 @@
     "typeinfo": "cpp",
     "mbed_application.h": "c",
     "stm32f7xx.h": "c",
-    "mstd_iterator": "cpp"
+    "mstd_iterator": "cpp",
+    "mstd_atomic": "cpp"
   }
 }
