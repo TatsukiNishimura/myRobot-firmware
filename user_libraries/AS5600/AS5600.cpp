@@ -51,7 +51,7 @@ int AS5600::getRotateCount()
     return rotate_count;
 }
 
-int AS5600::getRawAngle()
+uint16_t AS5600::getRawAngle()
 {
     return relative_angle;
 }

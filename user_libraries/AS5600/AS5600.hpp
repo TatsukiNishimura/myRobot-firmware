@@ -10,7 +10,7 @@ public:
     bool update(bool enableAbsoluteAngle = true);
     int getPulse();
     int getRotateCount();
-    int getRawAngle();
+    uint16_t getRawAngle();
     I2C &i2c;
 
 private:

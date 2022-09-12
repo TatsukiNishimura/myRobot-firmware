@@ -8,8 +8,8 @@
 int main(void)
 {
 
-    BTS7960 LMotor(D12, D13);
-    BTS7960 RMotor(D10, D11);
+    BTS7960 motor1(D5, D6);
+    BTS7960 motor2(PE_12, PE_14);
     I2C i2c1(D14, D15);
     I2C i2c2(PF_0, PF_1);
     AS5600 Rencoder(i2c2);
