@@ -12,6 +12,7 @@ target_sources(user_libraries
     UDPLib/UDPBase.cpp
     UDPLib/UDPSend.cpp
     UDPLib/UDPReceive.cpp
+    TCPlib/TCPbase.cpp
     QEI/QEI.cpp
     AS5600/AS5600.cpp
     TB6612FNG/TB6612FNG.cpp

@@ -7,15 +7,19 @@
 class moveControl
 {
 public:
-    moveControl(std::shared_ptr<odometry> _odom_ptr) : odom_ptr(nullptr), motor1(D5, D6), motor2(PE_12, PE_14), pid(0.005)
+    moveControl(std::shared_ptr<odometry> _odom_ptr) : odom_ptr(_odom_ptr), motor1(D5, D6), motor2(PE_12, PE_14), pid(0.005)
     {
-        odom_ptr = _odom_ptr;
         motor1.setPeriod(0.0001);
         motor2.setPeriod(0.0001);
     };
+    moveControl() : odom_ptr(nullptr), motor1(D5, D6), motor2(PE_12, PE_14), pid(0.005){};
     ~moveControl(){};
     void setPosition(float x, float y)
     {
+        if (odom_ptr == nullptr)
+        {
+            error("move_control: setPosition(): odom_ptr is null");
+        }
         while (1)
         {
             mutex.lock();
@@ -36,6 +40,10 @@ public:
     };
     void setPositionX(float x)
     {
+        if (odom_ptr == nullptr)
+        {
+            error("move_control: setPositionX(): odom_ptr is null");
+        }
         while (1)
         {
             mutex.lock();
@@ -55,6 +63,10 @@ public:
     };
     void setPositionY(float y)
     {
+        if (odom_ptr == nullptr)
+        {
+            error("move_control: setPositionY(): odom_ptr is null");
+        }
         pid.reset();
         while (1)
         {

@@ -64,6 +64,9 @@
     "stm32f7xx.h": "c",
     "mstd_iterator": "cpp",
     "mstd_atomic": "cpp",
-    "any": "cpp"
+    "any": "cpp",
+    "mstd_functional": "cpp",
+    "mstd_memory": "cpp",
+    "mstd_utility": "cpp"
   }
 }
