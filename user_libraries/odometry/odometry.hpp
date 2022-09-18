@@ -48,8 +48,8 @@ public:
         const int r_error_pulse = r_pulse - r_last_pulse;
 
         // 2×π÷4096 = 0.001533981...
-        const float l_angular_velocity = l_error_pulse / dt * 0.001533981f / gear_rational;
-        const float r_angular_velocity = r_error_pulse / dt * 0.001533981f / gear_rational;
+        l_angular_velocity = l_error_pulse / dt * 0.001533981f / gear_rational;
+        r_angular_velocity = r_error_pulse / dt * 0.001533981f / gear_rational;
         const float v = tire_radius * (l_angular_velocity + r_angular_velocity) * 0.5f;
         const float imu_omega = omegaIMULPF.filter(gyro.gyroscope[2]);
         float omega_from_wheel = (r_angular_velocity - l_angular_velocity) * tire_radius * 0.5f / body_radius;
@@ -101,6 +101,11 @@ public:
         return twist;
     }
 
+    const std::array<float, 2> getAngularVelocity() const
+    {
+        return {l_angular_velocity, r_angular_velocity};
+    }
+
 private:
     I2C l_encoder_i2c;
     AS5600 l_encoder;
@@ -123,6 +128,8 @@ private:
     int r_pulse = 0;
     int l_last_pulse = 0;
     int r_last_pulse = 0;
+    float l_angular_velocity = 0.f;
+    float r_angular_velocity = 0.f;
     float last_time = 0.f;
     float now = 0.f;
     float dt = 0.f;

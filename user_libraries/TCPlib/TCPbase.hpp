@@ -14,7 +14,7 @@ public:
     void poll();
     void setPoll(bool _ispolling);
     void send(uint8_t *data, int len);
-    void setOnReceiveHandler(std::function<void(uint8_t *data, int len)> _onReceive)
+    void setOnReceiveHandler(const std::function<void(uint8_t *data, int len)> &_onReceive)
     {
         isOnReceiveSet = true;
         onReceive = _onReceive;
