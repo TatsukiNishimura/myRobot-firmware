@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.19.0)
 
 set(MBED_PATH ${CMAKE_CURRENT_SOURCE_DIR}/mbed-os CACHE INTERNAL "")
 set(MBED_CONFIG_PATH ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "")
-set(APP_TARGET STM32_F767ZI_ws)
+set(APP_TARGET myRobot-firmware)
 set(USER_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/user_libraries CACHE INTERNAL "")
 include(${MBED_PATH}/tools/cmake/app.cmake)
 
