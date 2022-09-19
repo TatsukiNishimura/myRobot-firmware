@@ -9,7 +9,10 @@ int main(void)
   std::shared_ptr<tcpConnection> tcp_ptr = std::make_shared<tcpConnection>();
   Thread t;
   t.start([&] {
-    while (1) { odom_ptr->update(); }
+    while (1)
+    {
+      odom_ptr->update();
+    }
   });
 
   Thread t2;
