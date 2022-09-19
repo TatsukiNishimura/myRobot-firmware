@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 
 using std::vector;
 
@@ -12,7 +12,8 @@ using std::vector;
  *
  * @note シリアル化可能な値：プリミティブ型とそのstd::array
  * （おそらくmemcpyとsizeofが適切にできる型ならok）
- * @note 異なるプラットフォームに送るときはuint16_t, int32_t等のバイト数が決まっている型を使用した方が安全。バイトオーダーに注意。
+ * @note 異なるプラットフォームに送るときはuint16_t,
+ *int32_t等のバイト数が決まっている型を使用した方が安全。バイトオーダーに注意。
  *
  * 以下のように使用する
  * @code
@@ -35,7 +36,7 @@ vector<uint8_t> serialize(Args... args);
  * @endcode
  **/
 template <class... Args>
-bool deserialize(vector<uint8_t> &serialized, Args &...args);
+bool deserialize(vector<uint8_t> &serialized, Args &... args);
 
 //-------------- 実装 ----------------//
 
@@ -43,7 +44,7 @@ bool deserialize(vector<uint8_t> &serialized, Args &...args);
 
 constexpr size_t byteSize()
 {
-    return 0;
+  return 0;
 }
 
 /**
@@ -57,51 +58,48 @@ constexpr size_t byteSize()
 template <class tFirst, class... tRest>
 constexpr size_t byteSize(tFirst first, tRest... rest)
 {
-    return (sizeof...(rest)) ? sizeof(first) + byteSize(rest...) : sizeof(first);
+  return (sizeof...(rest)) ? sizeof(first) + byteSize(rest...) : sizeof(first);
 }
 
 template <class tFirst>
 void inter_serialize(size_t pos, vector<uint8_t> &serialized, tFirst first)
 {
-    memcpy(&serialized[pos], &first, sizeof(first));
+  memcpy(&serialized[pos], &first, sizeof(first));
 }
 
 template <class tFirst, class... tRest>
 void inter_serialize(size_t pos, vector<uint8_t> &serialized, tFirst first, tRest... rest)
 {
-    memcpy(&(serialized[pos]), &first, sizeof(first));
-    inter_serialize(pos + sizeof(first), serialized, rest...);
+  memcpy(&(serialized[pos]), &first, sizeof(first));
+  inter_serialize(pos + sizeof(first), serialized, rest...);
 }
 
 template <class... Args>
 vector<uint8_t> serialize(Args... args)
 {
-    vector<uint8_t> serialized(byteSize(args...));
-    inter_serialize(0, serialized, args...);
-    return serialized;
+  vector<uint8_t> serialized(byteSize(args...));
+  inter_serialize(0, serialized, args...);
+  return serialized;
 }
 
 template <class tFirst>
 void inter_deserialize(size_t pos, vector<uint8_t> &serialized, tFirst &first)
 {
-    memcpy(&first, &serialized[pos], sizeof(first));
+  memcpy(&first, &serialized[pos], sizeof(first));
 }
 
 template <class tFirst, class... tRest>
-void inter_deserialize(size_t pos, vector<uint8_t> &serialized, tFirst &first, tRest &...rest)
+void inter_deserialize(size_t pos, vector<uint8_t> &serialized, tFirst &first, tRest &... rest)
 {
-    memcpy(&first, &(serialized[pos]), sizeof(first));
-    inter_deserialize(pos + sizeof(first), serialized, rest...);
+  memcpy(&first, &(serialized[pos]), sizeof(first));
+  inter_deserialize(pos + sizeof(first), serialized, rest...);
 }
 
 template <class... Args>
-bool deserialize(vector<uint8_t> &serialized, Args &...args)
+bool deserialize(vector<uint8_t> &serialized, Args &... args)
 {
-    if (serialized.size() != byteSize(args...))
-    {
-        return false;
-    }
-    inter_deserialize(0, serialized, args...);
+  if (serialized.size() != byteSize(args...)) { return false; }
+  inter_deserialize(0, serialized, args...);
 
-    return true;
+  return true;
 }
