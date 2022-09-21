@@ -8,6 +8,7 @@ class tcpConnection : public TCPbase {
   tcpConnection()
   {
     configureReceive();
+    configureSend();
     setOnReceiveHandler([&](uint8_t *buf, int len) {
       onReceive(buf, len);
       motor.setVelocity(v, omega);

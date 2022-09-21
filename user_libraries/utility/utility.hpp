@@ -5,43 +5,43 @@
 template <typename T>
 T max_limiter(T value, T max)
 {
-    return (value <= max) ? value : max;
+  return (value <= max) ? value : max;
 };
 template <typename T>
 T min_limiter(T value, T min)
 {
-    return (value >= min) ? value : min;
+  return (value >= min) ? value : min;
 };
 template <typename T>
 T range_limiter(T value, T min, T max)
 {
-    if (max < min)
+  if (max < min)
+  {
+    error("utility.hpp: range_limiter: min argument is bigger than max argument.");
+  }
+  if (value <= max)
+  {
+    if (value >= min)
     {
-        error("utility.hpp: range_limiter: min argument is bigger than max argument.");
-    }
-    if (value <= max)
-    {
-        if (value >= min)
-        {
-            return value;
-        }
-        else
-        {
-            return min;
-        }
+      return value;
     }
     else
     {
-        return max;
+      return min;
     }
+  }
+  else
+  {
+    return max;
+  }
 }
 
 template <typename T>
 T abs_limiter(T value, T abs)
 {
-    if (abs < static_cast<T>(0))
-    {
-        error("utility.hpp: abs_limiter: abs argument is negative.");
-    }
-    return range_limiter<T>(value, -abs, abs);
+  if (abs < static_cast<T>(0))
+  {
+    error("utility.hpp: abs_limiter: abs argument is negative.");
+  }
+  return range_limiter<T>(value, -abs, abs);
 }
