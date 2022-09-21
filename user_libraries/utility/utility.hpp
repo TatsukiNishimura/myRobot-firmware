@@ -45,3 +45,13 @@ T abs_limiter(T value, T abs)
   }
   return range_limiter<T>(value, -abs, abs);
 }
+
+template <typename T>
+T sign(T value)
+{
+  if (value == static_cast<T>(0))
+  {
+    error("utility.hpp: sign: devide by 0");
+  }
+  return value / abs(value);
+}
