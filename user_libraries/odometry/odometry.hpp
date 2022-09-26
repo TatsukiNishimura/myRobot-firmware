@@ -47,10 +47,11 @@ class odometry {
     const int l_error_pulse = l_pulse - l_last_pulse;
     const int r_error_pulse = r_pulse - r_last_pulse;
 
+    mutex.lock();
     // 2×π÷4096 = 0.001533981...
     l_angular_velocity = l_error_pulse / dt * 0.001533981f / gear_rational;
     r_angular_velocity = r_error_pulse / dt * 0.001533981f / gear_rational;
-    const float v = tire_radius * (l_angular_velocity + r_angular_velocity) * 0.5f;
+    v = tire_radius * (l_angular_velocity + r_angular_velocity) * 0.5f;
     const float imu_omega = omegaIMULPF.filter(gyro.gyroscope[2]);
     float omega_from_wheel = (r_angular_velocity - l_angular_velocity) * tire_radius * 0.5f / body_radius;
 
@@ -91,7 +92,6 @@ class odometry {
     v_y = v * sin(yaw + 1.57f);
     x += v_x * dt;
     y += v_y * dt;
-    mutex.lock();
     odom[0] = x;
     odom[1] = y;
     odom[2] = yaw;
@@ -120,6 +120,11 @@ class odometry {
     return {l_angular_velocity, r_angular_velocity};
   }
 
+  const float &getVecocity() const
+  {
+    return v;
+  }
+
  private:
   I2C l_encoder_i2c;
   AS5600 l_encoder;
@@ -131,6 +136,7 @@ class odometry {
   lowPassFilter<float> omegaIMULPF;
   Mutex mutex;
 
+  float v = 0.f;
   float v_x = 0.f;
   float v_y = 0.f;
   float omega = 0.f;

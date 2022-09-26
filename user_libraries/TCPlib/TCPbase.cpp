@@ -49,8 +49,10 @@ void TCPbase::poll()
         {
           onReceive(rxBuf, sizeof(rxBuf));
         }
+        // ThisThread::sleep_for(10ms);
       }
     }
+    // ThisThread::sleep_for(50ms);
   }
 }
 
@@ -72,8 +74,10 @@ void TCPbase::configureReceive()
   {
     printf("receive socket opened\r\n");
   }
+  receiveSocket.set_blocking(false);
   receiveSocket.bind(tcpParam::myPort);
   receiveSocket.listen(1);
+
   isReceiveConfigured = true;
 }
 
@@ -85,7 +89,7 @@ void TCPbase::configureSend()
   }
   destination.set_ip_address(tcpParam::pcIp);
   destination.set_port(tcpParam::pcPort);
-  sendSocket.set_timeout(3);
+  // sendSocket.set_timeout(3);
   while (1)
   {
     nsapi_error_t error = sendSocket.connect(destination);
@@ -120,5 +124,5 @@ void TCPbase::send(uint8_t *data, int len)
   {
     printf("sent\r\n");
   }
-  ThisThread::sleep_for(10ms);
+  // ThisThread::sleep_for(10ms);
 }

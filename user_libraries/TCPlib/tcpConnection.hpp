@@ -5,13 +5,14 @@
 #include "odometry/odometry.hpp"
 class tcpConnection : public TCPbase {
  public:
-  tcpConnection()
+  tcpConnection(std::shared_ptr<odometry> &odom_ptr)
   {
     configureReceive();
     configureSend();
     setOnReceiveHandler([&](uint8_t *buf, int len) {
       onReceive(buf, len);
-      motor.setVelocity(v, omega);
+      send(odom_ptr);
+      // motor.setVelocity(v, omega);
     });
   };
   ~tcpConnection(){};
@@ -20,10 +21,12 @@ class tcpConnection : public TCPbase {
   {
     if (len == 15 && rxBuf[0] == 0xFF && rxBuf[1] == 0xFF && rxBuf[14] == 0xFE)
     {
+      mutex.lock();
       const float vx = *reinterpret_cast<float *>(&rxBuf[2]);
       const float vy = *reinterpret_cast<float *>(&rxBuf[6]);
       omega = *reinterpret_cast<float *>(&rxBuf[10]);
       v = vy;
+      mutex.unlock();
       // printf("%f %f %f %f\r\n", vx, vy, v, omega);
     }
   }
@@ -43,8 +46,14 @@ class tcpConnection : public TCPbase {
     TCPbase::send(data, sizeof(data));
   }
 
+  std::array<float, 2> getCmdVel() const
+  {
+    return {v, omega};
+  }
+
  private:
   moveControl motor;
+  Mutex mutex;
   float v = 0.f;
   float omega = 0.f;
 };
